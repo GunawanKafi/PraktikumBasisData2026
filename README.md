@@ -2,6 +2,7 @@
 
 Repositori ini berisi kumpulan kueri SQL Data Manipulation Language (`INSERT INTO`, `SELECT`, `UPDATE`, `DELETE`) dan pengujian integritas referensial untuk **Modul 4 Praktikum Basis Data (TA 2026/2027)** pada basis data **`db_akademik_praktikum`**.
 
+
 ## Persiapan Awal
 
 1. Pastikan servis **PostgreSQL** di Laragon berstatus **Running**.
