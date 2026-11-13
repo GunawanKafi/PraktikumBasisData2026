@@ -2,6 +2,7 @@
 
 Repositori ini berisi kumpulan skrip SQL (DDL, DML, TCL, dan Agregasi) serta kode program lengkap aplikasi web **Sistem Informasi Inventaris Alat Laboratorium (`db_inventaris_lab`)** untuk **Modul 7 Praktikum Basis Data (TA 2026/2027)**.
 
+
 ---
 
 ## Tahap 1: Penyelesaian SQL DDL — Pembuatan Database & Tabel Berelasi
