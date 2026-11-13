@@ -19,8 +19,8 @@ Jika Anda mengalami kendala teknis saat melakukan konfigurasi lingkungan kerja m
 
 * **Nama Lengkap** : Kafi Agung Gunawan
 * **NPM** : 2414101044
-* **Semester** : 5 *(Silakan sesuaikan)*
-* **Program Studi** : Informatika *(Silakan sesuaikan)*
+* **Semester** : 5 
+* **Program Studi** : Informatika 
 * **Dosen Pengampu** : Ii Supiandi, S.T., M.Kom.
 
 ---
