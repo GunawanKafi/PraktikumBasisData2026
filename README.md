@@ -58,10 +58,10 @@ Jika Anda ingin mengunduh repositori dan berpindah *branch* melalui terminal:
 
 ```bash
 # 1. Clone repositori ini ke komputer Anda
-git clone https://github.com/username-anda/nama-repo-praktikum.git
+git clone https://github.com/GunawanKafi/PraktikumBasisData2026.git
 
 # 2. Masuk ke direktori repositori
-cd nama-repo-praktikum
+cd PraktikumBasisData2026
 
 # 3. Berpindah ke branch modul tertentu (contoh: berpindah ke modul-1)
 git checkout modul-1
