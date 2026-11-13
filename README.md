@@ -1,111 +1,64 @@
-# Modul 1: Pengenalan DBMS, Arsitektur PostgreSQL, & Setup Lingkungan Kerja Laragon
+Praktikum Basis Data — Tahun Akademik 2026/2027
+Implementasi Sistem Basis Data Relasional dengan PostgreSQL & PHP PDO
+---
+👋 Selamat Datang, Praktikan!
+Selamat datang di repositori resmi Praktikum Basis Data Tahun Akademik 2026/2027. Repositori ini disusun sebagai pusat dokumentasi kode program, skrip kueri SQL, serta panduan teknis pendamping modul praktikum selama satu semester ke depan.
+Melalui praktikum ini, kita akan mempelajari cara merancang dan mengimplementasikan sistem basis data relasional berstandar industri secara bertahap—mulai dari pengenalan arsitektur PostgreSQL, perancangan skema dan relasi tabel (DDL), manipulasi data (DML), penggabungan tabel (JOIN) dan agregasi, hingga membangun aplikasi web CRUD yang utuh dan aman menggunakan PHP PDO (Prepared Statements).
+Silakan manfaatkan repositori ini untuk mempelajari struktur kueri, menguji skrip program di komputer masing-masing, serta menjadi referensi dalam menyelesaikan Tugas Mandiri di setiap pertemuan.
+---
+👨‍🏫 Profil Instruktur / Asisten Praktikum
+Jika Anda mengalami kendala teknis saat melakukan konfigurasi lingkungan kerja maupun saat menuliskan kueri SQL dan kode PHP, jangan ragu untuk bertanya selama sesi laboratorium berlangsung.
+Nama Lengkap : Kafi Agung Gunawan
+NPM : 2414101044
+Semester : 5 (Silakan sesuaikan)
+Program Studi : Informatika (Silakan sesuaikan)
+Dosen Pengampu : Ii Supiandi, S.T., M.Kom.
+---
+🌿 Struktur Branch Modul Praktikum
+Agar materi dan kode program tetap rapi serta tidak saling menimpa, repositori ini dibagi ke dalam beberapa Branch sesuai urutan modul pertemuan. Branch `main` ini berfungsi sebagai halaman pengantar utama.
+Berikut adalah daftar branch modul yang tersedia di repositori ini:
+Nama Branch	Modul	Topik Bahasan Utama
+`main`	Pengantar	Sambutan praktikan, profil instruktur, dan panduan navigasi repositori.
+`modul-1`	Modul 1	Pengenalan DBMS, Arsitektur PostgreSQL, & Setup Lingkungan Kerja Laragon (`cek_env.php` & CLI `psql`).
+`modul-2`	Modul 2	Dasar Sintaks SQL PostgreSQL & Dasar Bahasa PHP untuk Basis Data (`simulasi_dasar.php`).
+`modul-3`	Modul 3	Perancangan DDL (`CREATE`, `ALTER`, `INDEX`) & Relasi Tabel (`db_akademik_praktikum`).
+`modul-4`	Modul 4	Manipulasi Data (DML), Klausa `RETURNING`, Pencarian `ILIKE`, & Operasi CRUD Dasar SQL.
+`modul-5`	Modul 5	PostgreSQL Lanjutan (`JOIN`, Agregasi, Transaksi) & Integrasi PHP Dasar — Read Data (`koneksi.php` & `index.php`).
+`modul-6`	Modul 6	Integrasi Lanjutan PostgreSQL & Aplikasi CRUD PHP Utuh — Create, Update, Delete (`si_akademik`).
+`modul-7`	Modul 7	Mini-Proyek Sistem Informasi Inventaris Laboratorium (`db_inventaris_lab` & `inventaris_lab`).
+---
+🚀 Cara Mengakses Materi pada Setiap Branch
+Anda dapat mengakses kode program pada masing-masing modul melalui dua cara berikut:
+Cara 1: Melalui Antarmuka Web GitHub (Tanpa Git CLI)
+Klik tombol dropdown `main` (ikon cabang/branch) yang terletak di pojok kiri atas daftar file repositori ini.
+Pilih nama branch modul yang ingin Anda pelajari (misalnya `modul-1`, `modul-2`, dst.).
+Halaman akan otomatis memuat `README.md` beserta file kode khusus untuk modul tersebut.
+Cara 2: Melalui Terminal / Git Bash di Komputer Lokal
+Jika Anda ingin mengunduh repositori dan berpindah branch melalui terminal:
+```bash
+# 1. Clone repositori ini ke komputer Anda
+git clone https://github.com/username-anda/nama-repo-praktikum.git
 
-Repositori ini berisi kumpulan perintah terminal, kode program PHP, dan kueri SQL untuk **Modul 1 Praktikum Basis Data (TA 2026/2027)**.
+# 2. Masuk ke direktori repositori
+cd nama-repo-praktikum
 
-## Prasyarat Lingkungan Kerja
-
-* **Laragon** (Apache Web Server & PHP)
-
-* **PostgreSQL** (Port Default: `5432`, User: `postgres`)
-
-* **Ekstensi PHP Aktif**: `pdo_pgsql` dan `pgsql`
-
-* **Aplikasi Klien GUI**: pgAdmin 4 / DBeaver Community Edition
-
-## 1. Pengujian Ekstensi PHP PostgreSQL
-
-### A. Verifikasi Melalui Terminal Laragon
-
-Buka Terminal Laragon dan jalankan perintah berikut untuk memastikan ekstensi `pdo_pgsql` dan `pgsql` sudah aktif:
-
+# 3. Berpindah ke branch modul tertentu (contoh: berpindah ke modul-1)
+git checkout modul-1
 ```
-php -m | findstr pgsql
-
-```
-
-Output yang diharapkan:
-
-```
-pdo_pgsql
-pgsql
-
-```
-
-### B. Skrip Verifikasi Lingkungan Web (`cek_env.php`)
-
-Simpan kode berikut di dalam direktori root web Laragon (`C:\laragon\www\cek_env.php`), lalu akses melalui browser pada alamat `http://localhost/cek_env.php`:
-
-```
-<?php
-// Menampilkan status ketersediaan driver PDO PostgreSQL di Web Server Apache
-echo "<h2>Verifikasi Lingkungan PHP & PostgreSQL di Laragon</h2>";
-echo "<p>Versi PHP Aktif: <strong>" . phpversion() . "</strong></p>";
-
-if (extension_loaded('pdo_pgsql')) {
-    echo "<p style='color: green;'><strong>[BERHASIL]</strong> Ekstensi <code>pdo_pgsql</code> sudah aktif dan siap digunakan!</p>";
-} else {
-    echo "<p style='color: red;'><strong>[GAGAL]</strong> Ekstensi <code>pdo_pgsql</code> belum aktif. Periksa kembali php.ini dan Reload Apache.</p>";
-}
-
-echo "<p>Daftar Driver PDO yang Terdeteksi: <code>" . implode(", ", PDO::getAvailableDrivers()) . "</code></p>";
-?>
-
-```
-
-## 2. Verifikasi Server Melalui Terminal `psql`
-
-### A. Masuk ke Konsol `psql`
-
-Buka Terminal Laragon dan jalankan perintah berikut untuk masuk sebagai superuser `postgres`:
-
-```
-psql -h localhost -p 5432 -U postgres
-
-```
-
-### B. Mengatur Kata Sandi (Password) Superuser `postgres`
-
-Jalankan kueri SQL berikut di dalam prompt `postgres=#`:
-
-```
-ALTER USER postgres WITH PASSWORD 'postgres';
-
-```
-
-### C. Meta-Command & Kueri Dasar di `psql`
-
-| Perintah di `psql` | Fungsi dan Kegunaan | 
-| ----- | ----- | 
-| `\conninfo` | Menampilkan detail koneksi aktif (nama database, user, host, dan port 5432). | 
-| `\l` | Menampilkan daftar seluruh database yang ada di dalam server PostgreSQL. | 
-| `\du` | Menampilkan daftar seluruh pengguna (roles/users) beserta hak aksesnya. | 
-| `SELECT version();` | Menampilkan versi lengkap mesin PostgreSQL dan arsitektur kompilasinya. | 
-| `\q` | Keluar (quit) dari antarmuka `psql` dan kembali ke terminal standar Laragon. | 
-
-## 3. Pengujian Kueri di pgAdmin 4 (Query Tool)
-
-Setelah mendaftarkan server PostgreSQL Laragon di pgAdmin 4, buka **Query Tool** pada database `postgres` dan jalankan kueri berikut:
-
-```
-SELECT 
-    current_database() AS nama_database,
-    current_user AS pengguna_aktif,
-    inet_server_port() AS port_server,
-    version() AS versi_postgresql;
-
-```
-
-## 4. Kueri Tugas Mandiri (Bagian A - Poin 4)
-
-Jalankan kueri berikut pada **Query Tool** pgAdmin 4 atau **SQL Editor** DBeaver (sesuaikan `'Nama Lengkap Anda'` dan `'NIM Anda'` dengan identitas masing-masing):
-
-```
-SELECT 
-    'Nama Lengkap Anda' AS nama_praktikan,
-    'NIM Anda' AS nim_praktikan,
-    current_database() AS db_aktif,
-    inet_server_addr() AS ip_server,
-    inet_server_port() AS port_server,
-    now() AS waktu_eksekusi;
-
-```
+---
+🛠️ Perangkat Lunak & Lingkungan Kerja
+Pastikan komputer atau laptop yang Anda gunakan selama praktikum telah terinstal perangkat berikut:
+Laragon (Mengelola Web Server Apache & PHP 8.x)
+PostgreSQL (Berjalan pada Port Default `5432`)
+Ekstensi PHP: `pdo_pgsql` dan `pgsql` (Wajib diaktifkan melalui menu Laragon)
+Aplikasi GUI Basis Data: pgAdmin 4 atau DBeaver Community Edition
+Teks Editor: Visual Studio Code (VS Code)
+---
+📌 Tata Tertib Praktikum
+Praktikan wajib berpakaian rapi dan mengenakan jas praktikum selama berada di laboratorium.
+Keterlambatan lebih dari 20 menit tanpa alasan yang jelas akan dicatat sebagai tidak hadir (Alfa).
+Ketidakhadiran ditoleransi maksimal 3 (tiga) kali pertemuan dengan syarat wajib menyertakan alasan yang jelas serta bukti yang sah (surat keterangan sakit atau izin resmi).
+Praktikan wajib mengerjakan dan mengumpulkan Tugas Mandiri pada setiap akhir pertemuan sesuai batas waktu yang ditentukan.
+Seluruh hasil penilaian praktikum bersifat final dan tidak ada perbaikan nilai (remedial) dalam bentuk apa pun.
+---
+Selamat belajar dan selamat mengikuti kegiatan Praktikum Basis Data!
